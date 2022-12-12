@@ -2,6 +2,9 @@
 #include <cstring>
 #include <cstdlib>
 #include <vector>
+//#include "jsoncpp.cpp"
+#include <iostream>
+#include <fstream>
 using namespace std;
 class Person//人为基类
 {
@@ -33,7 +36,7 @@ class Teacher : public Person//教师为派生类
       string Speciality;//专业
       string JobTitle;//职称
    public:
-      Teacher(int type = 1, string num = "123456", string name = "aaaa", char gen = '1', int age = 233, string fac = "", string spe = "", string job = "") : Person(type, num, name, gen, age)
+      Teacher(string num = "123456", string name = "aaaa", char gen = '1', int age = 233, string fac = "", string spe = "", string job = "") : Person(1, num, name, gen, age)
       {
          Faculty = fac;
          Speciality = spe;
@@ -42,7 +45,7 @@ class Teacher : public Person//教师为派生类
       string getFaculty() { return Faculty; }
       string getSpeciality() { return Speciality; }
       string getJobTitle() { return JobTitle; }
-      int count(int Ty, vector<Teacher> &p){//若T=1则计算总人数，若Ty=2则计算男员工人数，若Ty=3则计算女员工人数
+      int count(int Ty, vector<Teacher> p){//若T=1则计算总人数，若Ty=2则计算男员工人数，若Ty=3则计算女员工人数
          int i, count = 0;
          if (Ty == 1)
          {
@@ -76,7 +79,7 @@ class Experimenter : public Person//实验员为派生类
       string Laboratory;//xx实验室
       string Job;//职务
    public:
-      Experimenter(int type = 2, string num = "123456", string name = "aaaa", char gen = '1', int age = 233, string lab = "", string job = "") : Person(type, num, name, gen, age)
+      Experimenter(string num = "123456", string name = "aaaa", char gen = '1', int age = 233, string lab = "", string job = "") : Person(2, num, name, gen, age)
       {
          Laboratory = lab;
          Job = job;
@@ -117,7 +120,7 @@ class Admin : public Person//行政为派生类
       string Job;//职务
       string Officelocation;//办公地点
    public:
-      Admin(int type = 3, string num="123456", string name = "aaaa", char gen='1', int age=233, string job="", string off="") : Person(type, num, name, gen, age)
+      Admin(string num="123456", string name = "aaaa", char gen='1', int age=233, string job="", string off="") : Person(3, num, name, gen, age)
       {
          Job = job;
          Officelocation = off;
@@ -161,7 +164,7 @@ class TeacherAdmin : public Person//教师兼行政为派生类
       string Job;//职务
       string Officelocation;//办公地点
    public:
-      TeacherAdmin(int type = 4, string num = "123456", string name = "aaaa", char gen = '1', int age = 233, string fac = "", string spe = "", string job = "", string job1 = "", string off = "") : Person(type, num, name, gen, age)
+      TeacherAdmin(string num = "123456", string name = "aaaa", char gen = '1', int age = 233, string fac = "", string spe = "", string job = "", string job1 = "", string off = "") : Person(4, num, name, gen, age)
       {
          Faculty = fac;
          Speciality = spe;
@@ -204,13 +207,19 @@ class TeacherAdmin : public Person//教师兼行政为派生类
 };
 
 int main(){
-vector<Teacher*> t;
+system("chcp 65001");//设置控制台输出为UTF-8编码
+vector<Teacher> t;
 vector<Experimenter*> e;
 vector<Admin*> a;
 vector<TeacherAdmin*> ta;
-t.push_back(new Teacher(1,"123456","aaaa",'1',233,"计算机系","计算机科学与技术","教授"));
+Teacher Teacher_temp("123456","aaaa",'1',233,"计算机系","计算机科学与技术","教授");
+Experimenter Experimenter_temp("12","aaaa",'1',233,"计算机系","计算机科学与技术","教授");
+t.push_back(Teacher_temp);
    //统计教师人数
-   cout << "教师总人数为：" << t[0]->count(1, t) << endl;
-   system("pause");
+   cout << "教师总人数为：" << t[0].count(1,t) << endl;
+   //统计男教师人数
+   cout << "男教师人数为：" << t[0].count(2,t) << endl;
+   //统计女教师人数
+   cout << "女教师人数为：" << t[0].count(3,t) << endl;
    return 0;
 }
