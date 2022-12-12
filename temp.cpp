@@ -2,7 +2,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <vector>
-//#include "jsoncpp.cpp"
+#include "jsoncpp.cpp"
 #include <iostream>
 #include <fstream>
 using namespace std;
@@ -205,21 +205,59 @@ class TeacherAdmin : public Person//教师兼行政为派生类
          return count;
       }
 };
-
+void InsertNew(vector<Teacher> &t, vector<Experimenter> &e, vector<Admin> &a, vector<TeacherAdmin> &ta){//插入数据
+   int i;
+   cout<<"请输入员工身份对应的数字：1.教师 2.实验员 3.行政 4.教师兼行政"<<endl;
+   cin>>i;
+   int age;
+   string num, name, gen,fac,spe,job,lab,job1,off;//fac系部 spe专业 job职称 lab实验室 job1职务 off办公地点
+   switch (i)
+   {
+   case 1:{
+      cout<<"请输入教师的工号、姓名、性别、年龄、系部、专业、职称"<<endl;
+      cin>>num>>name>>gen>>age>>fac>>spe>>job;
+      Teacher Teacher_temp(num, name, gen, age, fac, spe, job);
+      t.push_back(Teacher_temp);
+      break;}
+   case 2:{
+      cout<<"请输入实验员的工号、姓名、性别、年龄、实验室、职务"<<endl;
+      cin>>num>>name>>gen>>age>>lab>>job1;
+      Experimenter Experimenter_temp(num, name, gen, age, lab, job1);
+      e.push_back(Experimenter_temp);
+      break;}
+   case 3:{
+      cout<<"请输入行政的工号、姓名、性别、年龄、职务、办公地点"<<endl;
+      cin>>num>>name>>gen>>age>>job1>>off;
+      Admin Admin_temp(num, name, gen, age, job1, off);
+      a.push_back(Admin_temp);
+      break;}
+   case 4:{
+      cout<<"请输入教师兼行政的工号、姓名、性别、年龄、系部、专业、职务、办公地点、职称"<<endl;
+      cin>>num>>name>>gen>>age>>fac>>spe>>job>>off>>job1;
+      TeacherAdmin TeacherAdmin_temp(num, name, gen, age, fac, spe, job, job1, off);
+      ta.push_back(TeacherAdmin_temp);
+      break;}
+   default:
+      break;
+   }
+}
 int main(){
 system("chcp 65001");//设置控制台输出为UTF-8编码
 vector<Teacher> t;
-vector<Experimenter*> e;
-vector<Admin*> a;
-vector<TeacherAdmin*> ta;
+vector<Experimenter> e;
+vector<Admin> a;
+vector<TeacherAdmin> ta;
 Teacher Teacher_temp("123456","aaaa",'1',233,"计算机系","计算机科学与技术","教授");
-Experimenter Experimenter_temp("12","aaaa",'1',233,"计算机系","计算机科学与技术","教授");
+Experimenter Experimenter_temp("12","aaaa",'1',233,"光电实验室","教授");
 t.push_back(Teacher_temp);
+e.push_back(Experimenter_temp);
    //统计教师人数
    cout << "教师总人数为：" << t[0].count(1,t) << endl;
    //统计男教师人数
    cout << "男教师人数为：" << t[0].count(2,t) << endl;
    //统计女教师人数
    cout << "女教师人数为：" << t[0].count(3,t) << endl;
+   //统计实验员人数
+   cout << "实验员总人数为：" << e[0].count(1,e) << endl;
    return 0;
 }
