@@ -246,18 +246,18 @@ system("chcp 65001");//设置控制台输出为UTF-8编码
 vector<Teacher> t;
 vector<Experimenter> e;
 vector<Admin> a;
-vector<TeacherAdmin> ta;
-Teacher Teacher_temp("123456","aaaa",'1',233,"计算机系","计算机科学与技术","教授");
-Experimenter Experimenter_temp("12","aaaa",'1',233,"光电实验室","教授");
-t.push_back(Teacher_temp);
-e.push_back(Experimenter_temp);
-   //统计教师人数
-   cout << "教师总人数为：" << t[0].count(1,t) << endl;
-   //统计男教师人数
-   cout << "男教师人数为：" << t[0].count(2,t) << endl;
-   //统计女教师人数
-   cout << "女教师人数为：" << t[0].count(3,t) << endl;
-   //统计实验员人数
-   cout << "实验员总人数为：" << e[0].count(1,e) << endl;
+// vector<TeacherAdmin> ta;
+// Teacher Teacher_temp("123456","aaaa",'1',233,"计算机系","计算机科学与技术","教授");
+// Experimenter Experimenter_temp("12","aaaa",'1',233,"光电实验室","教授");
+// t.push_back(Teacher_temp);
+// e.push_back(Experimenter_temp);
+//    //统计教师人数
+//    cout << "教师总人数为：" << t[0].count(1,t) << endl;
+//    //统计男教师人数
+//    cout << "男教师人数为：" << t[0].count(2,t) << endl;
+//    //统计女教师人数
+//    cout << "女教师人数为：" << t[0].count(3,t) << endl;
+//    //统计实验员人数
+//    cout << "实验员总人数为：" << e[0].count(1,e) << endl;
    return 0;
 }
