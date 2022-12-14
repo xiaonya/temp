@@ -6,16 +6,16 @@
 #include <iostream>
 #include <fstream>
 using namespace std;
-class Person//äººä¸ºåŸºç±»
+class Person//ÈËÎª»ùÀà
 {
    private:
-      int Type;// 1bytes,1ä¸ºæ•™å¸ˆï¼Œ2ä¸ºå®éªŒå‘˜ï¼Œ3ä¸ºè¡Œæ”¿ï¼Œ4ä¸ºæ•™å¸ˆå…¼è¡Œæ”¿
+      int Type;// 1bytes,1Îª½ÌÊ¦£¬2ÎªÊµÑéÔ±£¬3ÎªĞĞÕş£¬4Îª½ÌÊ¦¼æĞĞÕş
       string Num;
       string Name;
-      char Gender;//boys is 1
+      int Gender;//boys is 1
       int Age;
    public:
-      Person(int type=0,string num = "123456", string name = "aaaa", char gen = '1', int age = 233)
+      Person(int type=0,string num = "123456", string name = "aaaa", int gen = 1, int age = 233)
       { 
          Type = type;
          Num=num;
@@ -23,20 +23,28 @@ class Person//äººä¸ºåŸºç±»
          Gender = gen;
          Age=age;
       }
-      char getType() { return Type; }
+      int getType() { return Type; }
       string getNum() { return Num; }
       string getName() { return Name; }
-      char getGender(){return Gender;}
+      int getGender(){return Gender;}
       int getAge() { return Age; }
+      void Change0(int type, string num, string name, int gen, int age)
+      {
+         Type = type;
+         Num = num;
+         Name = name;
+         Gender = gen;
+         Age = age;
+      }
 };
-class Teacher : public Person//æ•™å¸ˆä¸ºæ´¾ç”Ÿç±»
+class Teacher : public Person//½ÌÊ¦ÎªÅÉÉúÀà
 {
    private:
-      string Faculty;//ç³»éƒ¨
-      string Speciality;//ä¸“ä¸š
-      string JobTitle;//èŒç§°
+      string Faculty;//Ïµ²¿
+      string Speciality;//×¨Òµ
+      string JobTitle;//Ö°³Æ
    public:
-      Teacher(string num = "123456", string name = "aaaa", char gen = '1', int age = 233, string fac = "", string spe = "", string job = "") : Person(1, num, name, gen, age)
+      Teacher(string num = "123456", string name = "aaaa", int gen = 1, int age = 233, string fac = "", string spe = "", string job = "") : Person(1, num, name, gen, age)
       {
          Faculty = fac;
          Speciality = spe;
@@ -45,7 +53,7 @@ class Teacher : public Person//æ•™å¸ˆä¸ºæ´¾ç”Ÿç±»
       string getFaculty() { return Faculty; }
       string getSpeciality() { return Speciality; }
       string getJobTitle() { return JobTitle; }
-      int count(int Ty, vector<Teacher> p){//è‹¥T=1åˆ™è®¡ç®—æ€»äººæ•°ï¼Œè‹¥Ty=2åˆ™è®¡ç®—ç”·å‘˜å·¥äººæ•°ï¼Œè‹¥Ty=3åˆ™è®¡ç®—å¥³å‘˜å·¥äººæ•°
+      int count(int Ty, vector<Teacher> p){//ÈôT=1Ôò¼ÆËã×ÜÈËÊı£¬ÈôTy=2Ôò¼ÆËãÄĞÔ±¹¤ÈËÊı£¬ÈôTy=3Ôò¼ÆËãÅ®Ô±¹¤ÈËÊı
          int i, count = 0;
          if (Ty == 1)
          {
@@ -58,7 +66,7 @@ class Teacher : public Person//æ•™å¸ˆä¸ºæ´¾ç”Ÿç±»
          {
             for (i = 0; i < p.size(); i++)
             {
-               if (p[i].getGender() == '1')
+               if (p[i].getGender() == 1)
                   count++;
             }
          }
@@ -66,27 +74,46 @@ class Teacher : public Person//æ•™å¸ˆä¸ºæ´¾ç”Ÿç±»
          {
             for (i = 0; i < p.size(); i++)
             {
-               if (p[i].getGender() == '0')
+               if (p[i].getGender() == 0)
                   count++;
             }
          }
          return count;
       }
+      void show(){
+         cout << "--------------------------------" << endl;
+         cout << "Type:" << "1.½ÌÊ¦" << endl;
+         cout << "Num:" << getNum() << endl;
+         cout << "Name:" << getName() << endl;
+         cout << "Gender:"<<((getGender())?("ÄĞÔ±¹¤"):("Å®Ô±¹¤"))<< endl;
+         cout << "Age:" << getAge() << endl;
+         cout << "Faculty:" << getFaculty() << endl;
+         cout << "Speciality:" << getSpeciality() << endl;
+         cout << "JobTitle:" << getJobTitle() << endl;
+         cout << "--------------------------------" << endl;
+      }
+      void modify(string num, string name, int gen, int age, string fac, string spe, string job)
+      {  
+         Change0(1, num, name, gen, age);
+         Faculty = fac;
+         Speciality = spe;
+         JobTitle = job;
+      }  
 };
-class Experimenter : public Person//å®éªŒå‘˜ä¸ºæ´¾ç”Ÿç±»
+class Experimenter : public Person//ÊµÑéÔ±ÎªÅÉÉúÀà
 {
    private:
-      string Laboratory;//xxå®éªŒå®¤
-      string Job;//èŒåŠ¡
+      string Laboratory;//xxÊµÑéÊÒ
+      string Job;//Ö°Îñ
    public:
-      Experimenter(string num = "123456", string name = "aaaa", char gen = '1', int age = 233, string lab = "", string job = "") : Person(2, num, name, gen, age)
+      Experimenter(string num = "123456", string name = "aaaa", int gen = 1, int age = 233, string lab = "", string job = "") : Person(2, num, name, gen, age)
       {
          Laboratory = lab;
          Job = job;
       }
       string getLaboratory() { return Laboratory; }
       string getJob() { return Job; }
-      int count(int Ty, vector<Experimenter> &p){//è‹¥T=1åˆ™è®¡ç®—æ€»äººæ•°ï¼Œè‹¥Ty=2åˆ™è®¡ç®—ç”·å‘˜å·¥äººæ•°ï¼Œè‹¥Ty=3åˆ™è®¡ç®—å¥³å‘˜å·¥äººæ•°
+      int count(int Ty, vector<Experimenter> &p){//ÈôT=1Ôò¼ÆËã×ÜÈËÊı£¬ÈôTy=2Ôò¼ÆËãÄĞÔ±¹¤ÈËÊı£¬ÈôTy=3Ôò¼ÆËãÅ®Ô±¹¤ÈËÊı
          int i, count = 0;
          if (Ty == 1)
          {
@@ -99,7 +126,7 @@ class Experimenter : public Person//å®éªŒå‘˜ä¸ºæ´¾ç”Ÿç±»
          {
             for (i = 0; i < p.size(); i++)
             {
-               if (p[i].getGender() == '1')
+               if (p[i].getGender() == 1)
                   count++;
             }
          }
@@ -107,27 +134,43 @@ class Experimenter : public Person//å®éªŒå‘˜ä¸ºæ´¾ç”Ÿç±»
          {
             for (i = 0; i < p.size(); i++)
             {
-               if (p[i].getGender() == '0')
+               if (p[i].getGender() == 0)
                   count++;
             }
          }
          return count;
       }
+      void show(){
+         cout << "--------------------------------" << endl;
+         cout << "Num:" << getNum() << endl;
+         cout << "Name:" << getName() << endl;
+         cout << "Gender:"<<((getGender())?("ÄĞÔ±¹¤"):("Å®Ô±¹¤"))<< endl;
+         cout << "Age:" << getAge() << endl;
+         cout << "Laboratory:" << getLaboratory() << endl;
+         cout << "Job:" << getJob() << endl;
+         cout << "--------------------------------" << endl;
+      }
+      void modify(string num, string name, int gen, int age, string lab, string job)
+      {
+         Change0(2, num, name, gen, age);
+         Laboratory = lab;
+         Job = job;
+      }
 };
-class Admin : public Person//è¡Œæ”¿ä¸ºæ´¾ç”Ÿç±»
+class Admin : public Person//ĞĞÕşÎªÅÉÉúÀà
 {
    private:
-      string Job;//èŒåŠ¡
-      string Officelocation;//åŠå…¬åœ°ç‚¹
+      string Job;//Ö°Îñ
+      string Officelocation;//°ì¹«µØµã
    public:
-      Admin(string num="123456", string name = "aaaa", char gen='1', int age=233, string job="", string off="") : Person(3, num, name, gen, age)
+      Admin(string num="123456", string name = "aaaa", int gen = 1, int age=233, string job="", string off="") : Person(3, num, name, gen, age)
       {
          Job = job;
          Officelocation = off;
       }
       string getJob() { return Job; }
       string getOfficelocation() { return Officelocation; }
-      int count(int Ty, vector<Admin> &p){//è‹¥T=1åˆ™è®¡ç®—æ€»äººæ•°ï¼Œè‹¥Ty=2åˆ™è®¡ç®—ç”·å‘˜å·¥äººæ•°ï¼Œè‹¥Ty=3åˆ™è®¡ç®—å¥³å‘˜å·¥äººæ•°
+      int count(int Ty, vector<Admin> &p){//ÈôT=1Ôò¼ÆËã×ÜÈËÊı£¬ÈôTy=2Ôò¼ÆËãÄĞÔ±¹¤ÈËÊı£¬ÈôTy=3Ôò¼ÆËãÅ®Ô±¹¤ÈËÊı
          int i, count = 0;
          if (Ty == 1)
          {
@@ -140,7 +183,7 @@ class Admin : public Person//è¡Œæ”¿ä¸ºæ´¾ç”Ÿç±»
          {
             for (i = 0; i < p.size(); i++)
             {
-               if (p[i].getGender() == '1')
+               if (p[i].getGender() == 1)
                   count++;
             }
          }
@@ -148,23 +191,39 @@ class Admin : public Person//è¡Œæ”¿ä¸ºæ´¾ç”Ÿç±»
          {
             for (i = 0; i < p.size(); i++)
             {
-               if (p[i].getGender() == '0')
+               if (p[i].getGender() == 0)
                   count++;
             }
          }
          return count;
       }
+      void show(){
+         cout << "--------------------------------" << endl;
+         cout << "Num:" << getNum() << endl;
+         cout << "Name:" << getName() << endl;
+         cout << "Gender:"<<((getGender())?("ÄĞÔ±¹¤"):("Å®Ô±¹¤"))<< endl;
+         cout << "Age:" << getAge() << endl;
+         cout << "Job:" << getJob() << endl;
+         cout << "Officelocation:" << getOfficelocation() << endl;
+         cout << "--------------------------------" << endl;
+      }
+      void modify(string num, string name, int gen, int age, string job, string off)
+      {
+         Change0(3, num, name, gen, age);
+         Job = job;
+         Officelocation = off;
+      }
 };
-class TeacherAdmin : public Person//æ•™å¸ˆå…¼è¡Œæ”¿ä¸ºæ´¾ç”Ÿç±»
+class TeacherAdmin : public Person//½ÌÊ¦¼æĞĞÕşÎªÅÉÉúÀà
 {
    private:
-      string Faculty;//ç³»éƒ¨
-      string Speciality;//ä¸“ä¸š
-      string JobTitle;//èŒç§°
-      string Job;//èŒåŠ¡
-      string Officelocation;//åŠå…¬åœ°ç‚¹
+      string Faculty;//Ïµ²¿
+      string Speciality;//×¨Òµ
+      string JobTitle;//Ö°³Æ
+      string Job;//Ö°Îñ
+      string Officelocation;//°ì¹«µØµã
    public:
-      TeacherAdmin(string num = "123456", string name = "aaaa", char gen = '1', int age = 233, string fac = "", string spe = "", string job = "", string job1 = "", string off = "") : Person(4, num, name, gen, age)
+      TeacherAdmin(string num = "123456", string name = "aaaa", int gen = 1, int age = 233, string fac = "", string spe = "", string job = "", string job1 = "", string off = "") : Person(4, num, name, gen, age)
       {
          Faculty = fac;
          Speciality = spe;
@@ -177,7 +236,7 @@ class TeacherAdmin : public Person//æ•™å¸ˆå…¼è¡Œæ”¿ä¸ºæ´¾ç”Ÿç±»
       string getJobTitle() { return JobTitle; }
       string getJob() { return Job; }
       string getOfficelocation() { return Officelocation; }
-      int count(int Ty, vector<TeacherAdmin> &p){//è‹¥Ty=1åˆ™è®¡ç®—æ€»äººæ•°ï¼Œè‹¥Ty=2åˆ™è®¡ç®—ç”·å‘˜å·¥äººæ•°ï¼Œè‹¥Ty=3åˆ™è®¡ç®—å¥³å‘˜å·¥äººæ•°
+      int count(int Ty, vector<TeacherAdmin> &p){//ÈôTy=1Ôò¼ÆËã×ÜÈËÊı£¬ÈôTy=2Ôò¼ÆËãÄĞÔ±¹¤ÈËÊı£¬ÈôTy=3Ôò¼ÆËãÅ®Ô±¹¤ÈËÊı
          int i, count = 0;
          if (Ty == 1)
          {
@@ -190,7 +249,7 @@ class TeacherAdmin : public Person//æ•™å¸ˆå…¼è¡Œæ”¿ä¸ºæ´¾ç”Ÿç±»
          {
             for (i = 0; i < p.size(); i++)
             {
-               if (p[i].getGender() == '1')
+               if (p[i].getGender() == 1)
                   count++;
             }
          }
@@ -198,66 +257,605 @@ class TeacherAdmin : public Person//æ•™å¸ˆå…¼è¡Œæ”¿ä¸ºæ´¾ç”Ÿç±»
          {
             for (i = 0; i < p.size(); i++)
             {
-               if (p[i].getGender() == '0')
+               if (p[i].getGender() == 0)
                   count++;
             }
          }
          return count;
       }
+      void show(){
+         cout << "--------------------------------" << endl;
+         cout << "Num:" << getNum() << endl;
+         cout << "Name:" << getName() << endl;
+         cout << "Gender:"<<((getGender())?("ÄĞÔ±¹¤"):("Å®Ô±¹¤"))<< endl;
+         cout << "Age:" << getAge() << endl;
+         cout << "Faculty:" << getFaculty() << endl;
+         cout << "Speciality:" << getSpeciality() << endl;
+         cout << "JobTitle:" << getJobTitle() << endl;
+         cout << "Job:" << getJob() << endl;
+         cout << "Officelocation:" << getOfficelocation() << endl;
+         cout << "--------------------------------" << endl;
+      }
+      void modify(string num, string name, int gen, int age, string fac, string spe, string job, string job1, string off)
+      {
+         Change0(4, num, name, gen, age);
+         Faculty = fac;
+         Speciality = spe;
+         JobTitle = job;
+         Job = job1;
+         Officelocation = off;
+      }
 };
-void InsertNew(vector<Teacher> &t, vector<Experimenter> &e, vector<Admin> &a, vector<TeacherAdmin> &ta){//æ’å…¥æ•°æ®
+
+int CheckName(string Name, vector<Teacher> t, vector<Experimenter> e, vector<Admin> a, vector<TeacherAdmin> ta){//ÔÚ²åÈëĞÂÔªËØÊ±ÅĞ¶ÏÃû×ÖÊÇ·ñ´æÔÚ£¬Èô´æÔÚÔò·µ»Ø0£¬·ñÔò·µ»Ø1
    int i;
-   cout<<"è¯·è¾“å…¥å‘˜å·¥èº«ä»½å¯¹åº”çš„æ•°å­—ï¼š1.æ•™å¸ˆ 2.å®éªŒå‘˜ 3.è¡Œæ”¿ 4.æ•™å¸ˆå…¼è¡Œæ”¿"<<endl;
+   for(i=0;i<t.size();i++){
+      if(Name==t[i].getName())
+         return 0;
+   }
+   for(i=0;i<e.size();i++){
+      if(Name==e[i].getName())
+         return 0;
+   }
+   for(i=0;i<a.size();i++){
+      if(Name==a[i].getName())
+         return 0;
+   }
+   for(i=0;i<ta.size();i++){
+      if(Name==ta[i].getName())
+         return 0;
+   }
+   return 1;
+}
+
+int CheckNum(string Num, vector<Teacher> t, vector<Experimenter> e, vector<Admin> a, vector<TeacherAdmin> ta){//ÔÚ²åÈëĞÂÔªËØÊ±¼ìÑé±àºÅÎ¨Ò»ĞÔ,ÈôÖØ¸´Ôò·µ»Ø0£¬·ñÔò·µ»Ø1
+   int i;
+   for(i=0;i<t.size();i++){
+      if(Num==t[i].getNum())
+         return 0;
+   }
+   for(i=0;i<e.size();i++){
+      if(Num==e[i].getNum())
+         return 0;
+   }
+   for(i=0;i<a.size();i++){
+      if(Num==a[i].getNum())
+         return 0;
+   }
+   for(i=0;i<ta.size();i++){
+      if(Num==ta[i].getNum())
+         return 0;
+   }
+   return 1;
+}
+void InsertNew(vector<Teacher> &t, vector<Experimenter> &e, vector<Admin> &a, vector<TeacherAdmin> &ta){//²åÈëÊı¾İ
+   int i;
+   cout<<"ÇëÊäÈëÔ±¹¤Éí·İ¶ÔÓ¦µÄÊı×Ö£º1.½ÌÊ¦ 2.ÊµÑéÔ± 3.ĞĞÕş 4.½ÌÊ¦¼æĞĞÕş"<<endl;
    cin>>i;
-   int age;
-   string num, name, gen,fac,spe,job,lab,job1,off;//facç³»éƒ¨ speä¸“ä¸š jobèŒç§° labå®éªŒå®¤ job1èŒåŠ¡ offåŠå…¬åœ°ç‚¹
+   int age,gen;//genĞÔ±ğ 1ÄĞ 0Å®
+   string num, name,fac,spe,job,lab,job1,off;//facÏµ²¿ spe×¨Òµ jobÖ°³Æ labÊµÑéÊÒ job1Ö°Îñ off°ì¹«µØµã
    switch (i)
    {
    case 1:{
-      cout<<"è¯·è¾“å…¥æ•™å¸ˆçš„å·¥å·ã€å§“åã€æ€§åˆ«ã€å¹´é¾„ã€ç³»éƒ¨ã€ä¸“ä¸šã€èŒç§°"<<endl;
+      cout<<"ÇëÊäÈë½ÌÊ¦µÄ¹¤ºÅ¡¢ĞÕÃû¡¢ĞÔ±ğ[1ÄĞ 0Å®]¡¢ÄêÁä¡¢Ïµ²¿¡¢×¨Òµ¡¢Ö°³Æ"<<endl;
       cin>>num>>name>>gen>>age>>fac>>spe>>job;
-      Teacher Teacher_temp(num, name, gen, age, fac, spe, job);
-      t.push_back(Teacher_temp);
+      if (CheckNum(num, t, e, a, ta))
+      {
+         Teacher Teacher_temp(num, name, gen, age, fac, spe, job);
+         t.push_back(Teacher_temp);
+         cout << "Êı¾İÏîÔöÌí³É¹¦" << endl;
+      }
+      else
+         cout << "¸Ã¹¤ºÅÒÑ´æÔÚ,Çë¼ì²éÎŞÎóºóÖØĞÂÔöÌíÊı¾İÏî" << endl;
       break;}
+
    case 2:{
-      cout<<"è¯·è¾“å…¥å®éªŒå‘˜çš„å·¥å·ã€å§“åã€æ€§åˆ«ã€å¹´é¾„ã€å®éªŒå®¤ã€èŒåŠ¡"<<endl;
+      cout<<"ÇëÊäÈëÊµÑéÔ±µÄ¹¤ºÅ¡¢ĞÕÃû¡¢ĞÔ±ğ[1ÄĞ 0Å®]¡¢ÄêÁä¡¢ÊµÑéÊÒ¡¢Ö°Îñ"<<endl;
       cin>>num>>name>>gen>>age>>lab>>job1;
-      Experimenter Experimenter_temp(num, name, gen, age, lab, job1);
-      e.push_back(Experimenter_temp);
+      if (CheckNum(num, t, e, a, ta))
+      {
+         Experimenter Experimenter_temp(num, name, gen, age, lab, job1);
+         e.push_back(Experimenter_temp);
+         cout << "Êı¾İÏîÔöÌí³É¹¦" << endl;
+      }
+      else
+         cout << "¸Ã¹¤ºÅÒÑ´æÔÚ,Çë¼ì²éÎŞÎóºóÖØĞÂÔöÌíÊı¾İÏî" << endl;
       break;}
+
    case 3:{
-      cout<<"è¯·è¾“å…¥è¡Œæ”¿çš„å·¥å·ã€å§“åã€æ€§åˆ«ã€å¹´é¾„ã€èŒåŠ¡ã€åŠå…¬åœ°ç‚¹"<<endl;
+      cout<<"ÇëÊäÈëĞĞÕşµÄ¹¤ºÅ¡¢ĞÕÃû¡¢ĞÔ±ğ[1ÄĞ 0Å®]¡¢ÄêÁä¡¢Ö°Îñ¡¢°ì¹«µØµã"<<endl;
       cin>>num>>name>>gen>>age>>job1>>off;
-      Admin Admin_temp(num, name, gen, age, job1, off);
-      a.push_back(Admin_temp);
+      if (CheckNum(num, t, e, a, ta))
+      {
+         Admin Admin_temp(num, name, gen, age, job1, off);
+         a.push_back(Admin_temp);
+         cout << "Êı¾İÏîÔöÌí³É¹¦" << endl;
+      }
+      else
+         cout << "¸Ã¹¤ºÅÒÑ´æÔÚ,Çë¼ì²éÎŞÎóºóÖØĞÂÔöÌíÊı¾İÏî" << endl;
       break;}
+
    case 4:{
-      cout<<"è¯·è¾“å…¥æ•™å¸ˆå…¼è¡Œæ”¿çš„å·¥å·ã€å§“åã€æ€§åˆ«ã€å¹´é¾„ã€ç³»éƒ¨ã€ä¸“ä¸šã€èŒåŠ¡ã€åŠå…¬åœ°ç‚¹ã€èŒç§°"<<endl;
+      cout<<"ÇëÊäÈë½ÌÊ¦¼æĞĞÕşµÄ¹¤ºÅ¡¢ĞÕÃû¡¢ĞÔ±ğ[1ÄĞ 0Å®]¡¢ÄêÁä¡¢Ïµ²¿¡¢×¨Òµ¡¢Ö°Îñ¡¢°ì¹«µØµã¡¢Ö°³Æ"<<endl;
       cin>>num>>name>>gen>>age>>fac>>spe>>job>>off>>job1;
-      TeacherAdmin TeacherAdmin_temp(num, name, gen, age, fac, spe, job, job1, off);
-      ta.push_back(TeacherAdmin_temp);
+      if (CheckNum(num, t, e, a, ta))
+      {
+         TeacherAdmin TeacherAdmin_temp(num, name, gen, age, fac, spe, job, job1, off);
+         ta.push_back(TeacherAdmin_temp);
+         cout << "Êı¾İÏîÔöÌí³É¹¦" << endl;
+      }
+      else
+         cout << "¸Ã¹¤ºÅÒÑ´æÔÚ,Çë¼ì²éÎŞÎóºóÖØĞÂÔöÌíÊı¾İÏî" << endl;
       break;}
    default:
+      cout<<"Éí·İÊäÈë´íÎó£¬»Øµ½Ö÷½çÃæ"<<endl;
       break;
    }
 }
+
+void CountSum(vector<Teacher> t, vector<Experimenter> e, vector<Admin> a, vector<TeacherAdmin> ta){//Í³¼ÆÈËÊı
+      cout<<"½ÌÊ¦×ÜÈËÊıÎª£º"<<t[0].count(1,t)<<endl;
+      cout<<"ÊµÑéÔ±×ÜÈËÊıÎª£º"<<e[0].count(1,e)<<endl;
+      cout<<"ĞĞÕş×ÜÈËÊıÎª£º"<<a[0].count(1,a)<<endl;
+      cout<<"½ÌÊ¦¼æĞĞÕşÔ±¹¤×ÜÈËÊıÎª£º"<<ta[0].count(1,ta)<<endl;
+      cout<<"×ÜÈËÊıÎª£º"<<t[0].count(1,t)+e[0].count(1,e)+a[0].count(1,a)+ta[0].count(1,ta)<<endl;
+      cout<<"ÄĞÔ±¹¤×ÜÈËÊıÎª£º"<<t[0].count(2,t)+e[0].count(2,e)+a[0].count(2,a)+ta[0].count(2,ta)<<endl;
+      cout<<"Å®Ô±¹¤×ÜÈËÊıÎª£º"<<t[0].count(3,t)+e[0].count(3,e)+a[0].count(3,a)+ta[0].count(3,ta)<<endl;
+}
+
+//ÓÃÓÚ²éÕÒ¹¦ÄÜµÄº¯Êı£¬·µ»ØÒ»¸öÕûĞÍÊı×é£¬Êı×éÖĞ´æ·ÅµÄÊÇ²éÕÒµ½µÄÔªËØµÄÏÂ±ê£¬Î´×öÄ£ºıÆ¥Åä£¬ÈôĞèÒªÄ£ºıÆ¥Åä¹¦ÄÜĞèÒªÔö¼ÓÕıÔò±í´ïÊ½µÄ¿â
+int NameSearchCore(string Name,int (&Res)[100], vector<Teacher> t, vector<Experimenter> e, vector<Admin> a, vector<TeacherAdmin> ta){//Ãû³Æ²éÕÒº¯ÊıµÄºËĞÄº¯Êı£¬NumÎª´æ·Å²éÕÒ½á¹ûµÄÊı×é,NameÎª²éÕÒµÄĞÕÃû
+   int n=0,x,y,i;//´æ·Å²éÕÒ½á¹ûµÄÏÂ±ê,xÎªÖÖÀàµÄ±êÖ¾£¬yÎª¾ßÌåÖÖÀàµÄÏÂ±ê,nÎª²éÕÒµ½µÄ¸öÊı
+   for(i=0;i<t.size();i++){//ÔÚ½ÌÊ¦ÖĞ²éÕÒ
+      if(Name==t[i].getName()){
+         x=2*n;
+         y=2*n+1;
+         Res[x]=1;
+         Res[y]=i;
+         n++;
+      }
+   }
+   for(i=0;i<e.size();i++){//ÔÚÊµÑéÔ±ÖĞ²éÕÒ
+      if(Name==e[i].getName()){
+         x=2*n;
+         y=2*n+1;
+         Res[x]=2;
+         Res[y]=i;
+         n++;
+      }
+   }
+   for(i=0;i<a.size();i++){//ÔÚĞĞÕşÈËÔ±ÖĞ²éÕÒ
+      if(Name==a[i].getName()){
+         x=2*n;
+         y=2*n+1;
+         Res[x]=3;
+         Res[y]=i;
+         n++;
+      }
+   }
+   for(i=0;i<ta.size();i++){//ÔÚ½ÌÊ¦¼æĞĞÕşÈËÔ±ÖĞ²éÕÒ
+      if(Name==ta[i].getName()){
+         x=2*n;
+         y=2*n+1;
+         Res[x]=4;
+         Res[y]=i;
+         n++;
+      }
+   }
+   return n;//·µ»Ø²éÕÒ½á¹ûµÄ¸öÊı
+}
+int NumSearchCore(string Num,int (&Res)[100], vector<Teacher> t, vector<Experimenter> e, vector<Admin> a, vector<TeacherAdmin> ta){//±àºÅ²éÕÒº¯ÊıµÄºËĞÄº¯Êı£¬NumÎª´æ·Å²éÕÒ½á¹ûµÄÊı×é,NumÎª²éÕÒµÄ±àºÅ
+   int n=0,x,y,i;//´æ·Å²éÕÒ½á¹ûµÄÏÂ±ê,xÎªÖÖÀàµÄ±êÖ¾£¬yÎª¾ßÌåÖÖÀàµÄÏÂ±ê,nÎª²éÕÒµ½µÄ¸öÊı
+   for(i=0;i<t.size();i++){//ÔÚ½ÌÊ¦ÖĞ²éÕÒ
+      if(Num==t[i].getNum()){
+         x=2*n;
+         y=2*n+1;
+         Res[x]=1;
+         Res[y]=i;
+         n++;
+      }
+   }
+   for(i=0;i<e.size();i++){//ÔÚÊµÑéÔ±ÖĞ²éÕÒ
+      if(Num==e[i].getNum()){
+         x=2*n;
+         y=2*n+1;
+         Res[x]=2;
+         Res[y]=i;
+         n++;
+      }
+   }
+   for(i=0;i<a.size();i++){//ÔÚĞĞÕşÈËÔ±ÖĞ²éÕÒ
+      if(Num==a[i].getNum()){
+         x=2*n;
+         y=2*n+1;
+         Res[x]=3;
+         Res[y]=i;
+         n++;
+      }
+   }
+   for(i=0;i<ta.size();i++){//ÔÚ½ÌÊ¦¼æĞĞÕşÈËÔ±ÖĞ²éÕÒ
+      if(Num==ta[i].getNum()){
+         x=2*n;
+         y=2*n+1;
+         Res[x]=4;
+         Res[y]=i;
+         n++;
+      }
+   }
+   return n;//·µ»Ø²éÕÒ½á¹ûµÄ¸öÊı
+}
+void Search(vector<Teacher> t, vector<Experimenter> e, vector<Admin> a, vector<TeacherAdmin> ta){
+   int flag;//´æ·Å²éÕÒ·½Ê½µÄ±êÖ¾
+   cout<<"Èô°´ÕÕ±àºÅ²éÕÒÔòÊäÈë1£¬Èô°´ÕÕĞÕÃû²éÕÒÔòÊäÈë2"<<endl;
+   cin>>flag;
+   switch (flag)
+   {
+      case 1:{//°´ÕÕ±àºÅ²éÕÒ
+         int Res[100];//´æ·Å²éÕÒ½á¹ûµÄÊı×é
+         int count;//´æ·Å²éÕÒ½á¹ûµÄ¸öÊı
+         string Num;
+         cout<<"ÇëÊäÈëÒª²éÕÒµÄ±àºÅ"<<endl;
+         cin>>Num;
+         count=NumSearchCore(Num,Res,t,e,a,ta);
+         if(count==0){//Ã»ÓĞ²éÕÒµ½½á¹û
+            cout<<"Ã»ÓĞ²éÕÒµ½½á¹û"<<endl;
+            break;
+         }
+         for (int i=0;i<count;i++){//Êä³ö²éÕÒ½á¹û
+            int x=2*i;
+            int y=2*i+1;
+            switch (Res[x])
+            {
+            case 1:
+               t[Res[y]].show();
+               break;
+            case 2:
+               e[Res[y]].show();
+               break;
+            case 3:
+               a[Res[y]].show();
+               break;
+            case 4:
+               ta[Res[y]].show();
+               break;
+            default:
+               break;
+            }
+         }
+         break;}
+      case 2:{//°´ÕÕĞÕÃû²éÕÒ
+         int Res[100];//´æ·Å²éÕÒ½á¹ûµÄÊı×é
+         int count;//´æ·Å²éÕÒ½á¹ûµÄ¸öÊı
+         string Name;
+         cout<<"ÇëÊäÈëÒª²éÕÒµÄĞÕÃû"<<endl;
+         cin>>Name;
+         count=NameSearchCore(Name,Res,t,e,a,ta);
+         if (count==0)//Ã»ÓĞ²éÕÒµ½½á¹û
+         {
+            cout<<"Ã»ÓĞ²éÕÒµ½½á¹û"<<endl;
+            break;
+         }
+         for (int i=0;i<count;i++){//Êä³ö²éÕÒ½á¹û
+            int x=2*i;
+            int y=2*i+1;
+            switch (Res[x])
+            {
+            case 1:
+               t[Res[y]].show();
+               break;
+            case 2:
+               e[Res[y]].show();
+               break;
+            case 3:
+               a[Res[y]].show();
+               break;
+            case 4:
+               ta[Res[y]].show();
+               break;
+            default:
+               break;
+            }
+         }
+         break;}
+      default:
+         cout<<"ÊäÈë´íÎó£¬»Øµ½Ö÷²Ëµ¥"<<endl;
+         break;
+   }
+
+
+
+}
+//ÓÃÓÚÉ¾³ıµÄº¯Êı
+void Delete(vector<Teacher> &t, vector<Experimenter> &e, vector<Admin> &a, vector<TeacherAdmin> &ta){//É¾³ıº¯Êı,ÓÉÓÚÉ¾³ıÕâÒ»²Ù×÷µÄÌØÊâĞÔ£¬É¾³ıÖ»ÄÜÍ¨¹ıÎ¨Ò»µÄ±àºÅÀ´½øĞĞ²Ù×÷
+   cout<<"ÇëÊäÈëÒªÉ¾³ıµÄÈËÔ±µÄ±àºÅ"<<endl;
+   string Num;
+   cin>>Num;
+   if (CheckNum(Num,t,e,a,ta))
+   {
+      cout<<"±àºÅ²»´æÔÚ£¬É¾³ıÊ§°Ü"<<endl;
+      return;
+   }
+   else{//¿ªÊ¼Ö´ĞĞÉ¾³ı²Ù×÷
+      for (int i=0;i<t.size();i++){//ÔÚ½ÌÊ¦ÖĞ²éÕÒ
+         if (Num==t[i].getNum())
+         {
+            t.erase(t.begin()+i);
+            cout<<"É¾³ı³É¹¦"<<endl;
+            return;
+         }
+      }
+      for (int i=0;i<e.size();i++){//ÔÚÊµÑéÔ±ÖĞ²éÕÒ
+         if (Num==e[i].getNum())
+         {
+            e.erase(e.begin()+i);
+            cout<<"É¾³ı³É¹¦"<<endl;
+            return;
+         }
+      }
+      for (int i=0;i<a.size();i++){//ÔÚ¹ÜÀíÔ±ÖĞ²éÕÒ
+         if (Num==a[i].getNum())
+         {
+            a.erase(a.begin()+i);
+            cout<<"É¾³ı³É¹¦"<<endl;
+            return;
+         }
+      }
+      for (int i=0;i<ta.size();i++){//ÔÚ½ÌÊ¦¹ÜÀíÔ±ÖĞ²éÕÒ
+         if (Num==ta[i].getNum())
+         {
+            ta.erase(ta.begin()+i);
+            cout<<"É¾³ı³É¹¦"<<endl;
+            return;
+         }
+      }
+   }
+}
+
+//ÓÃÓÚĞŞ¸ÄµÄº¯Êı£¬ĞŞ¸ÄÇ°ÏÈ¼ì²é±àºÅÎ¨Ò»ĞÔ£¬ĞŞ¸ÄºóÔÙ¼ì²é±àºÅÎ¨Ò»ĞÔ
+void ModifyAccordingNum(vector<Teacher> &t, vector<Experimenter> &e, vector<Admin> &a, vector<TeacherAdmin> &ta){
+   cout<<"ÇëÊäÈëÒªĞŞ¸ÄµÄÈËÔ±µÄ±àºÅ"<<endl;
+   int age,gen;//genĞÔ±ğ 1ÄĞ 0Å®
+   string num, name,fac,spe,job,lab,job1,off,PastNum;
+   cin>>num;
+   PastNum=num;
+   if (CheckNum(num,t,e,a,ta))
+   {
+      cout<<"±àºÅ²»´æÔÚ£¬ÕÒ²»µ½¶ÔÏó£¬ĞŞ¸ÄÊ§°Ü"<<endl;
+      return;
+   }
+   else{//¿ªÊ¼Ö´ĞĞĞŞ¸Ä²Ù×÷
+      for (int i=0;i<t.size();i++){//ÔÚ½ÌÊ¦ÖĞ²éÕÒ
+         if (num==t[i].getNum()){
+            cout<<"ÇëÊäÈëĞŞ¸Äºó½ÌÊ¦µÄ¹¤ºÅ¡¢ĞÕÃû¡¢ĞÔ±ğ[1ÄĞ 0Å®]¡¢ÄêÁä¡¢Ïµ²¿¡¢×¨Òµ¡¢Ö°³Æ"<<endl;
+            cin>>num>>name>>gen>>age>>fac>>spe>>job;
+               if (CheckNum(num,t,e,a,ta)||num==PastNum)
+               {  
+                  t[i].modify(num,name,gen,age,fac,spe,job);
+                  cout<<"ĞŞ¸Ä³É¹¦"<<endl;
+                  return;
+               }
+               else{
+                  cout<<"ĞŞ¸ÄÊ§°Ü£¬¹¤ºÅÖØ¸´"<<endl;
+                  return;
+               }
+            }
+      }
+      for (int i=0;i<e.size();i++){//ÔÚÊµÑéÔ±ÖĞ²éÕÒ
+         if (num==e[i].getNum())
+         {
+            cout<<"ÇëÊäÈëĞŞ¸ÄºóÊµÑéÔ±µÄ¹¤ºÅ¡¢ĞÕÃû¡¢ĞÔ±ğ[1ÄĞ 0Å®]¡¢ÄêÁä¡¢ÊµÑéÊÒ¡¢Ö°Îñ"<<endl;
+            cin>>num>>name>>gen>>age>>lab>>job1;
+               if (CheckNum(num,t,e,a,ta)||num==PastNum)
+               {  
+                  e[i].modify(num,name,gen,age,lab,job1);
+                  cout<<"ĞŞ¸Ä³É¹¦"<<endl;
+                  return;
+               }
+               else{
+                  cout<<"ĞŞ¸ÄÊ§°Ü£¬¹¤ºÅÖØ¸´"<<endl;
+                  return;
+               }
+         }
+      }
+      for (int i=0;i<a.size();i++){//ÔÚ¹ÜÀíÔ±ÖĞ²éÕÒ
+         if (num==a[i].getNum())
+         {
+            cout<<"ÇëÊäÈëĞŞ¸Äºó¹ÜÀíÔ±µÄ¹¤ºÅ¡¢ĞÕÃû¡¢ĞÔ±ğ[1ÄĞ 0Å®]¡¢ÄêÁä¡¢Ö°Îñ¡¢¿ÆÊÒ"<<endl;
+            cin>>num>>name>>gen>>age>>job>>off;
+               if (CheckNum(num,t,e,a,ta)||num==PastNum)
+               {  
+                  a[i].modify(num,name,gen,age,job,off);
+                  cout<<"ĞŞ¸Ä³É¹¦"<<endl;
+                  return;
+               }
+               else{
+                  cout<<"ĞŞ¸ÄÊ§°Ü£¬¹¤ºÅÖØ¸´"<<endl;
+                  return;
+               }
+         }
+      }
+      for (int i=0;i<ta.size();i++){//ÔÚ½ÌÊ¦¹ÜÀíÔ±ÖĞ²éÕÒ
+         if (num==ta[i].getNum())
+         {
+            cout<<"ÇëÊäÈëĞŞ¸Äºó½ÌÊ¦¹ÜÀíÔ±µÄ¹¤ºÅ¡¢ĞÕÃû¡¢ĞÔ±ğ[1ÄĞ 0Å®]¡¢ÄêÁä¡¢Ïµ²¿¡¢×¨Òµ¡¢Ö°³Æ¡¢Ö°Îñ¡¢¿ÆÊÒ"<<endl;
+            cin>>num>>name>>gen>>age>>fac>>spe>>job>>job1>>off;
+               if (CheckNum(num,t,e,a,ta)||num==PastNum)
+               {  
+                  ta[i].modify(num,name,gen,age,fac,spe,job,job1,off);
+                  cout<<"ĞŞ¸Ä³É¹¦"<<endl;
+                  return;
+               }
+               else{
+                  cout<<"ĞŞ¸ÄÊ§°Ü£¬¹¤ºÅÖØ¸´"<<endl;
+                  return;
+               }
+            }
+         }
+      }
+}
+void ModifyAccordingName(vector<Teacher> &t, vector<Experimenter> &e, vector<Admin> &a, vector<TeacherAdmin> &ta){
+   cout<<"ÇëÊäÈëÒªĞŞ¸ÄµÄÈËÔ±µÄĞÕÃû"<<endl;
+   int age,gen;//genĞÔ±ğ 1ÄĞ 0Å®
+   string num, name,fac,spe,job,lab,job1,off,PastName;
+   cin>>name;
+   PastName=name;
+   if (CheckName(name,t,e,a,ta))
+   {
+      cout<<"ĞÕÃû²»´æÔÚ£¬ÕÒ²»µ½¶ÔÏó£¬ĞŞ¸ÄÊ§°Ü"<<endl;
+      return;
+   }
+   else{//¿ªÊ¼Ö´ĞĞĞŞ¸Ä²Ù×÷
+      for (int i=0;i<t.size();i++){//ÔÚ½ÌÊ¦ÖĞ²éÕÒ
+         if (name==t[i].getName()){
+            cout<<"ÇëÊäÈëĞŞ¸Äºó½ÌÊ¦µÄ¹¤ºÅ¡¢ĞÕÃû¡¢ĞÔ±ğ[1ÄĞ 0Å®]¡¢ÄêÁä¡¢Ïµ²¿¡¢×¨Òµ¡¢Ö°³Æ"<<endl;
+            cin>>num>>name>>gen>>age>>fac>>spe>>job;
+               if (CheckNum(num,t,e,a,ta)||num==t[i].getNum())
+               {  
+                  t[i].modify(num,name,gen,age,fac,spe,job);
+                  cout<<"ĞŞ¸Ä³É¹¦"<<endl;
+                  return;
+               }
+               else{
+                  cout<<"ĞŞ¸ÄÊ§°Ü£¬¹¤ºÅÖØ¸´"<<endl;
+                  return;
+               }
+            }
+      }
+      for (int i=0;i<e.size();i++){//ÔÚÊµÑéÔ±ÖĞ²éÕÒ
+         if (name==e[i].getName())
+         {
+            cout<<"ÇëÊäÈëĞŞ¸ÄºóÊµÑéÔ±µÄ¹¤ºÅ¡¢ĞÕÃû¡¢ĞÔ±ğ[1ÄĞ 0Å®]¡¢ÄêÁä¡¢ÊµÑéÊÒ¡¢Ö°Îñ"<<endl;
+            cin>>num>>name>>gen>>age>>lab>>job1;
+               if (CheckNum(num,t,e,a,ta)||num==e[i].getNum())
+               {  
+                  e[i].modify(num,name,gen,age,lab,job1);
+                  cout<<"ĞŞ¸Ä³É¹¦"<<endl;
+                  return;
+               }
+               else{
+                  cout<<"ĞŞ¸ÄÊ§°Ü£¬¹¤ºÅÖØ¸´"<<endl;
+                  return;
+               }
+         }
+      }
+      for (int i=0;i<a.size();i++){//ÔÚ¹ÜÀíÔ±ÖĞ²éÕÒ
+         if (name==a[i].getName())
+         {
+            cout<<"ÇëÊäÈëĞŞ¸Äºó¹ÜÀíÔ±µÄ¹¤ºÅ¡¢ĞÕÃû¡¢ĞÔ±ğ[1ÄĞ 0Å®]¡¢ÄêÁä¡¢Ö°Îñ¡¢¿ÆÊÒ"<<endl;
+            cin>>num>>name>>gen>>age>>job>>off;
+               if (CheckNum(num,t,e,a,ta)||num==a[i].getNum())
+               {  
+                  a[i].modify(num,name,gen,age,job,off);
+                  cout<<"ĞŞ¸Ä³É¹¦"<<endl;
+                  return;
+               }
+               else{
+                  cout<<"ĞŞ¸ÄÊ§°Ü£¬¹¤ºÅÖØ¸´"<<endl;
+                  return;
+               }
+         }
+      }
+      for (int i=0;i<ta.size();i++){//ÔÚ½ÌÊ¦¹ÜÀíÔ±ÖĞ²éÕÒ
+         if (name==ta[i].getName())
+         {
+            cout<<"ÇëÊäÈëĞŞ¸Äºó½ÌÊ¦¹ÜÀíÔ±µÄ¹¤ºÅ¡¢ĞÕÃû¡¢ĞÔ±ğ[1ÄĞ 0Å®]¡¢ÄêÁä¡¢Ïµ²¿¡¢×¨Òµ¡¢Ö°³Æ¡¢Ö°Îñ¡¢¿ÆÊÒ"<<endl;
+            cin>>num>>name>>gen>>age>>fac>>spe>>job>>job1>>off;
+               if (CheckNum(num,t,e,a,ta)||num==ta[i].getNum())
+               {  
+                  ta[i].modify(num,name,gen,age,fac,spe,job,job1,off);
+                  cout<<"ĞŞ¸Ä³É¹¦"<<endl;
+                  return;
+               }
+               else{
+                  cout<<"ĞŞ¸ÄÊ§°Ü£¬¹¤ºÅÖØ¸´"<<endl;
+                  return;
+               }
+            }
+         }
+      }
+}
+void Modify(vector<Teacher> &t, vector<Experimenter> &e, vector<Admin> &a, vector<TeacherAdmin> &ta){//ĞŞ¸ÄÈËÔ±ĞÅÏ¢
+//Ñ¡ÔñĞŞ¸ÄµÄ·½Ê½À´µ÷ÓÃ²»Í¬µÄĞŞ¸Äº¯Êı
+   int choice;
+   cout<<"ÇëÑ¡ÔñĞŞ¸Ä·½Ê½£º1.°´¹¤ºÅĞŞ¸Ä 2.°´ĞÕÃûĞŞ¸Ä"<<endl;
+   cin>>choice;
+   switch (choice){
+      case 1:ModifyAccordingNum(t,e,a,ta);break;
+      case 2:ModifyAccordingName(t,e,a,ta);break;
+      default:cout<<"ÊäÈë´íÎó"<<endl;
+   }
+}
+//±éÀúÊä³öÃ¿¸öÈËµÄÊı¾İ
+void PrintAll(vector<Teacher> &t, vector<Experimenter> &e, vector<Admin> &a, vector<TeacherAdmin> &ta){
+   if (t.size()==0)
+      cout<<"ÎŞ½ÌÊ¦ĞÅÏ¢"<<endl;
+   else{
+      cout<<"½ÌÊ¦ĞÅÏ¢ÈçÏÂ£º"<<endl;
+      for (int i=0;i<t.size();i++){
+         t[i].show();
+      }
+   }
+   if (e.size()==0)
+      cout<<"ÎŞÊµÑéÔ±ĞÅÏ¢"<<endl;
+   else{
+      cout<<"ÊµÑéÔ±ĞÅÏ¢ÈçÏÂ£º"<<endl;
+      for (int i=0;i<e.size();i++){
+         e[i].show();
+      }
+   }
+   if (a.size()==0)
+      cout<<"ÎŞ¹ÜÀíÔ±ĞÅÏ¢"<<endl;
+   else{
+      cout<<"¹ÜÀíÔ±ĞÅÏ¢ÈçÏÂ£º"<<endl;
+      for (int i=0;i<a.size();i++){
+         a[i].show();
+      }
+   }
+   if (ta.size()==0)
+      cout<<"ÎŞ½ÌÊ¦¹ÜÀíÔ±ĞÅÏ¢"<<endl;
+   else{
+      cout<<"½ÌÊ¦¹ÜÀíÔ±ĞÅÏ¢ÈçÏÂ£º"<<endl;
+      for (int i=0;i<ta.size();i++){
+         ta[i].show();
+      }
+   }
+}
+
+
 int main(){
-system("chcp 65001");//è®¾ç½®æ§åˆ¶å°è¾“å‡ºä¸ºUTF-8ç¼–ç 
+system("chcp 936");//ÉèÖÃ¿ØÖÆÌ¨Êä³öÎªÖĞÎÄ
+int choice;
 vector<Teacher> t;
 vector<Experimenter> e;
 vector<Admin> a;
-// vector<TeacherAdmin> ta;
-// Teacher Teacher_temp("123456","aaaa",'1',233,"è®¡ç®—æœºç³»","è®¡ç®—æœºç§‘å­¦ä¸æŠ€æœ¯","æ•™æˆ");
-// Experimenter Experimenter_temp("12","aaaa",'1',233,"å…‰ç”µå®éªŒå®¤","æ•™æˆ");
-// t.push_back(Teacher_temp);
-// e.push_back(Experimenter_temp);
-//    //ç»Ÿè®¡æ•™å¸ˆäººæ•°
-//    cout << "æ•™å¸ˆæ€»äººæ•°ä¸ºï¼š" << t[0].count(1,t) << endl;
-//    //ç»Ÿè®¡ç”·æ•™å¸ˆäººæ•°
-//    cout << "ç”·æ•™å¸ˆäººæ•°ä¸ºï¼š" << t[0].count(2,t) << endl;
-//    //ç»Ÿè®¡å¥³æ•™å¸ˆäººæ•°
-//    cout << "å¥³æ•™å¸ˆäººæ•°ä¸ºï¼š" << t[0].count(3,t) << endl;
-//    //ç»Ÿè®¡å®éªŒå‘˜äººæ•°
-//    cout << "å®éªŒå‘˜æ€»äººæ•°ä¸ºï¼š" << e[0].count(1,e) << endl;
-   return 0;
+vector<TeacherAdmin> ta;
+int result[100];//¶¨ÒåÒ»¸öÓÃÀ´´æ·ÅËÑË÷½á¹ûµÄÕûĞÍÊı×é
+
+while (1){
+   system ("cls");
+   cout <<"-----------------ÈËÊÂ¹ÜÀíÏµÍ³-----------------"<< endl;
+   cout<<"»¶Ó­Ê¹ÓÃÈËÊÂ¹ÜÀíÏµÍ³"<<endl;
+   cout<<"1.Ìí¼ÓĞÂÔ±¹¤"<<endl;
+   cout<<"2.É¾³ıÔ±¹¤"<<endl;
+   cout<<"3.ĞŞ¸ÄÔ±¹¤ĞÅÏ¢"<<endl;
+   cout<<"4.²éÑ¯Ô±¹¤ĞÅÏ¢"<<endl;
+   cout<<"5.Í³¼ÆÔ±¹¤ÈËÊı"<<endl;
+   cout<<"6.±éÀúÊä³öËùÓĞÔ±¹¤ĞÅÏ¢"<<endl;
+   cout<<"7.ÍË³ö"<<endl;
+   cout<<"ÇëÊäÈëÄúµÄÑ¡Ôñ£º"<<endl;
+   cin>>choice;
+   switch (choice){
+      case 1:InsertNew(t,e,a,ta);break;
+      case 2:Delete(t,e,a,ta);break;
+      case 3:Modify(t,e,a,ta);break;
+      case 4:Search(t,e,a,ta);break;
+      case 5:CountSum(t,e,a,ta);break;
+      case 6:PrintAll(t,e,a,ta);break;
+      case 7:exit(0);
+      default:cout<<"ÊäÈë´íÎó£¬ÇëÖØĞÂÊäÈë"<<endl;
+   }
+   cout<<"-----------------------------------------------"<<endl;
+   system("pause");
+}
+return 0;
 }
