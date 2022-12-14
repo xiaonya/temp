@@ -848,6 +848,7 @@ void WriteToFile(vector<Teacher> t, vector<Experimenter> e, vector<Admin> a, vec
       experimenter[i]["name"]=e[i].getName();
       experimenter[i]["gen"]=e[i].getGender();
       experimenter[i]["age"]=e[i].getAge();
+      experimenter[i]["lab"]=e[i].getLaboratory();
       experimenter[i]["job"]=e[i].getJob();
    }
    for (int i=0;i<a.size();i++){
@@ -924,7 +925,41 @@ void WriteToFile(vector<Teacher> t, vector<Experimenter> e, vector<Admin> a, vec
    }
    */
 }
-
+//将json文件中的数据读取出来,并根据不同的职位分别存入不同的vector中
+void ReadFromFile(vector<Teacher> &t, vector<Experimenter> &e, vector<Admin> &a, vector<TeacherAdmin> &ta){
+   Json::Reader reader;
+   Json::Value root;
+   ifstream in;
+   in.open("data.json");
+   if (!in.is_open()){
+      cout<<"文件打开失败"<<endl;
+      return;
+   }
+   if (reader.parse(in,root)){
+      for (int i=0;i<root["teacher"].size();i++){
+         Teacher teacher;
+         teacher.modify(root["teacher"][i]["num"].asString(),root["teacher"][i]["name"].asString(),root["teacher"][i]["gen"].asInt(),root["teacher"][i]["age"].asInt(),root["teacher"][i]["fac"].asString(),root["teacher"][i]["spe"].asString(),root["teacher"][i]["job"].asString());
+         t.push_back(teacher);
+      }
+      }
+      for (int i=0;i<root["experimenter"].size();i++){
+         Experimenter experimenter;
+         experimenter.modify(root["experimenter"][i]["num"].asString(),root["experimenter"][i]["name"].asString(),root["experimenter"][i]["gen"].asInt(),root["experimenter"][i]["age"].asInt(),root["experimenter"][i]["lab"].asString(),root["experimenter"][i]["job"].asString());
+         e.push_back(experimenter);
+      }
+      for (int i=0;i<root["admin"].size();i++){
+         Admin admin;
+         admin.modify(root["admin"][i]["num"].asString(),root["admin"][i]["name"].asString(),root["admin"][i]["gen"].asInt(),root["admin"][i]["age"].asInt(),root["admin"][i]["job"].asString(),root["admin"][i]["off"].asString());
+         a.push_back(admin);
+      }
+      for (int i=0;i<root["teacheradmin"].size();i++){
+         TeacherAdmin teacheradmin;
+         teacheradmin.modify(root["teacheradmin"][i]["num"].asString(),root["teacheradmin"][i]["name"].asString(),root["teacheradmin"][i]["gen"].asInt(),root["teacheradmin"][i]["age"].asInt(),root["teacheradmin"][i]["fac"].asString(),root["teacheradmin"][i]["spe"].asString(),root["teacheradmin"][i]["job"].asString(),root["teacheradmin"][i]["job1"].asString(),root["teacheradmin"][i]["off"].asString());
+         ta.push_back(teacheradmin);
+      }
+   in.close();
+   cout<<"读取成功"<<endl;
+}
 
 int main(){
 system("chcp 936");//设置控制台输出为中文
