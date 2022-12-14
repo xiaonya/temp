@@ -833,6 +833,7 @@ int result[100];//定义一个用来存放搜索结果的整型数组
 
 while (1){
    system ("cls");
+   choice=0;
    cout <<"-----------------人事管理系统-----------------"<< endl;
    cout<<"欢迎使用人事管理系统"<<endl;
    cout<<"1.添加新员工"<<endl;
@@ -844,6 +845,13 @@ while (1){
    cout<<"7.退出"<<endl;
    cout<<"请输入您的选择："<<endl;
    cin>>choice;
+   //当输入的不是整数时，会出现死循环
+   while (cin.fail()){
+      cin.clear();
+      cin.sync();
+      cout<<"输入错误，请重新输入"<<endl;
+      cin>>choice;
+   }
    switch (choice){
       case 1:InsertNew(t,e,a,ta);break;
       case 2:Delete(t,e,a,ta);break;
@@ -852,7 +860,7 @@ while (1){
       case 5:CountSum(t,e,a,ta);break;
       case 6:PrintAll(t,e,a,ta);break;
       case 7:exit(0);
-      default:cout<<"输入错误，请重新输入"<<endl;
+      default:{cout<<"输入错误，请重新输入"<<endl;}
    }
    cout<<"-----------------------------------------------"<<endl;
    system("pause");
