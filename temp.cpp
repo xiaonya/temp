@@ -142,6 +142,7 @@ class Experimenter : public Person//实验员为派生类
       }
       void show(){
          cout << "--------------------------------" << endl;
+         cout << "Type:" << "2.实验员" << endl;
          cout << "Num:" << getNum() << endl;
          cout << "Name:" << getName() << endl;
          cout << "Gender:"<<((getGender())?("男员工"):("女员工"))<< endl;
@@ -199,6 +200,7 @@ class Admin : public Person//行政为派生类
       }
       void show(){
          cout << "--------------------------------" << endl;
+         cout << "Type:" << "3.行政" << endl;
          cout << "Num:" << getNum() << endl;
          cout << "Name:" << getName() << endl;
          cout << "Gender:"<<((getGender())?("男员工"):("女员工"))<< endl;
@@ -265,6 +267,7 @@ class TeacherAdmin : public Person//教师兼行政为派生类
       }
       void show(){
          cout << "--------------------------------" << endl;
+         cout << "Type:" << "4.教师兼行政" << endl;
          cout << "Num:" << getNum() << endl;
          cout << "Name:" << getName() << endl;
          cout << "Gender:"<<((getGender())?("男员工"):("女员工"))<< endl;
@@ -592,7 +595,7 @@ void Delete(vector<Teacher> &t, vector<Experimenter> &e, vector<Admin> &a, vecto
             return;
          }
       }
-      for (int i=0;i<a.size();i++){//在管理员中查找
+      for (int i=0;i<a.size();i++){//在行政中查找
          if (Num==a[i].getNum())
          {
             a.erase(a.begin()+i);
@@ -600,7 +603,7 @@ void Delete(vector<Teacher> &t, vector<Experimenter> &e, vector<Admin> &a, vecto
             return;
          }
       }
-      for (int i=0;i<ta.size();i++){//在教师管理员中查找
+      for (int i=0;i<ta.size();i++){//在教师兼行政中查找
          if (Num==ta[i].getNum())
          {
             ta.erase(ta.begin()+i);
@@ -657,10 +660,10 @@ void ModifyAccordingNum(vector<Teacher> &t, vector<Experimenter> &e, vector<Admi
                }
          }
       }
-      for (int i=0;i<a.size();i++){//在管理员中查找
+      for (int i=0;i<a.size();i++){//在行政中查找
          if (num==a[i].getNum())
          {
-            cout<<"请输入修改后管理员的工号、姓名、性别[1男 0女]、年龄、职务、科室"<<endl;
+            cout<<"请输入修改后行政的工号、姓名、性别[1男 0女]、年龄、职务、科室"<<endl;
             cin>>num>>name>>gen>>age>>job>>off;
                if (CheckNum(num,t,e,a,ta)||num==PastNum)
                {  
@@ -674,10 +677,10 @@ void ModifyAccordingNum(vector<Teacher> &t, vector<Experimenter> &e, vector<Admi
                }
          }
       }
-      for (int i=0;i<ta.size();i++){//在教师管理员中查找
+      for (int i=0;i<ta.size();i++){//在教师兼行政中查找
          if (num==ta[i].getNum())
          {
-            cout<<"请输入修改后教师管理员的工号、姓名、性别[1男 0女]、年龄、系部、专业、职称、职务、科室"<<endl;
+            cout<<"请输入修改后教师兼行政的工号、姓名、性别[1男 0女]、年龄、系部、专业、职称、职务、科室"<<endl;
             cin>>num>>name>>gen>>age>>fac>>spe>>job>>job1>>off;
                if (CheckNum(num,t,e,a,ta)||num==PastNum)
                {  
@@ -738,10 +741,10 @@ void ModifyAccordingName(vector<Teacher> &t, vector<Experimenter> &e, vector<Adm
                }
          }
       }
-      for (int i=0;i<a.size();i++){//在管理员中查找
+      for (int i=0;i<a.size();i++){//在行政中查找
          if (name==a[i].getName())
          {
-            cout<<"请输入修改后管理员的工号、姓名、性别[1男 0女]、年龄、职务、科室"<<endl;
+            cout<<"请输入修改后行政的工号、姓名、性别[1男 0女]、年龄、职务、科室"<<endl;
             cin>>num>>name>>gen>>age>>job>>off;
                if (CheckNum(num,t,e,a,ta)||num==a[i].getNum())
                {  
@@ -755,10 +758,10 @@ void ModifyAccordingName(vector<Teacher> &t, vector<Experimenter> &e, vector<Adm
                }
          }
       }
-      for (int i=0;i<ta.size();i++){//在教师管理员中查找
+      for (int i=0;i<ta.size();i++){//在教师行政中查找
          if (name==ta[i].getName())
          {
-            cout<<"请输入修改后教师管理员的工号、姓名、性别[1男 0女]、年龄、系部、专业、职称、职务、科室"<<endl;
+            cout<<"请输入修改后教师兼行政的工号、姓名、性别[1男 0女]、年龄、系部、专业、职称、职务、科室"<<endl;
             cin>>num>>name>>gen>>age>>fac>>spe>>job>>job1>>off;
                if (CheckNum(num,t,e,a,ta)||num==ta[i].getNum())
                {  
@@ -786,7 +789,8 @@ void Modify(vector<Teacher> &t, vector<Experimenter> &e, vector<Admin> &a, vecto
    }
 }
 //遍历输出每个人的数据
-void PrintAll(vector<Teacher> &t, vector<Experimenter> &e, vector<Admin> &a, vector<TeacherAdmin> &ta){
+//遍历输出每个人的数据
+void PrintAll(vector<Teacher> t, vector<Experimenter> e, vector<Admin> a, vector<TeacherAdmin> ta){
    if (t.size()==0)
       cout<<"无教师信息"<<endl;
    else{
@@ -804,21 +808,121 @@ void PrintAll(vector<Teacher> &t, vector<Experimenter> &e, vector<Admin> &a, vec
       }
    }
    if (a.size()==0)
-      cout<<"无管理员信息"<<endl;
+      cout<<"无行政信息"<<endl;
    else{
-      cout<<"管理员信息如下："<<endl;
+      cout<<"行政信息如下："<<endl;
       for (int i=0;i<a.size();i++){
          a[i].show();
       }
    }
    if (ta.size()==0)
-      cout<<"无教师管理员信息"<<endl;
+      cout<<"无教师兼行政信息"<<endl;
    else{
-      cout<<"教师管理员信息如下："<<endl;
+      cout<<"教师兼行政信息如下："<<endl;
       for (int i=0;i<ta.size();i++){
          ta[i].show();
       }
    }
+}
+//将每个人的数据使用jsoncpp库写入文件中
+void WriteToFile(vector<Teacher> t, vector<Experimenter> e, vector<Admin> a, vector<TeacherAdmin> ta){
+   Json::Value root;//定义数组对象根节点
+   Json::Value teacher;//定义teacher数组对象，以下同理
+   Json::Value experimenter;
+   Json::Value admin;
+   Json::Value teacheradmin;
+   Json::StyledWriter writer;//定义写入器
+   ofstream out;
+   out.open("data.json");//默认存储在当前目录下data.json文件中
+   for (int i=0;i<t.size();i++){
+      teacher[i]["num"]=t[i].getNum();
+      teacher[i]["name"]=t[i].getName();
+      teacher[i]["gen"]=t[i].getGender();
+      teacher[i]["age"]=t[i].getAge();
+      teacher[i]["fac"]=t[i].getFaculty();
+      teacher[i]["spe"]=t[i].getSpeciality();
+      teacher[i]["job"]=t[i].getJobTitle();
+   }
+   for (int i=0;i<e.size();i++){
+      experimenter[i]["num"]=e[i].getNum();
+      experimenter[i]["name"]=e[i].getName();
+      experimenter[i]["gen"]=e[i].getGender();
+      experimenter[i]["age"]=e[i].getAge();
+      experimenter[i]["job"]=e[i].getJob();
+   }
+   for (int i=0;i<a.size();i++){
+      admin[i]["num"]=a[i].getNum();
+      admin[i]["name"]=a[i].getName();
+      admin[i]["gen"]=a[i].getGender();
+      admin[i]["age"]=a[i].getAge();
+      admin[i]["job"]=a[i].getJob();
+      admin[i]["off"]=a[i].getOfficelocation();
+   }
+   for (int i=0;i<ta.size();i++){
+      teacheradmin[i]["num"]=ta[i].getNum();
+      teacheradmin[i]["name"]=ta[i].getName();
+      teacheradmin[i]["gen"]=ta[i].getGender();
+      teacheradmin[i]["age"]=ta[i].getAge();
+      teacheradmin[i]["fac"]=ta[i].getFaculty();
+      teacheradmin[i]["spe"]=ta[i].getSpeciality();
+      teacheradmin[i]["job"]=ta[i].getJob();
+      teacheradmin[i]["job1"]=ta[i].getJobTitle();
+      teacheradmin[i]["off"]=ta[i].getOfficelocation();
+   }
+   root["teacher"]=teacher;
+   root["experimenter"]=experimenter;
+   root["admin"]=admin;
+   root["teacheradmin"]=teacheradmin;
+   out<<writer.write(root);
+   out.close();
+   cout<<"保存成功"<<endl;
+   /*用注释列出json的大概文件结构
+   {
+   "teacher":[
+      {
+         "num":"001",
+         "name":"张三",
+         "gen":"男",
+         "age":"30",
+         "fac":"计算机学院",
+         "spe":"计算机科学与技术",
+         "job":"教授"
+      }
+   ],
+   "experimenter":[
+      {
+         "num":"003",
+         "name":"王五",
+         "gen":"男",
+         "age":"30",
+         "job":"实验员"
+      }
+   ],
+   "admin":[
+      {
+         "num":"005",
+         "name":"孙七",
+         "gen":"男",
+         "age":"30",
+         "job":"行政",
+         "off":"行政楼"
+      }
+   ],
+   "teacheradmin":[
+      {
+         "num":"007",
+         "name":"吴九",
+         "gen":"男",
+         "age":"30",
+         "fac":"计算机学院",
+         "spe":"计算机科学与技术",
+         "job":"行政",
+         "job1":"教授",
+         "off":"行政楼"
+      }
+   ]
+   }
+   */
 }
 
 
@@ -829,11 +933,8 @@ vector<Teacher> t;
 vector<Experimenter> e;
 vector<Admin> a;
 vector<TeacherAdmin> ta;
-int result[100];//定义一个用来存放搜索结果的整型数组
-
 while (1){
    system ("cls");
-   choice=0;
    cout <<"-----------------人事管理系统-----------------"<< endl;
    cout<<"欢迎使用人事管理系统"<<endl;
    cout<<"1.添加新员工"<<endl;
@@ -842,13 +943,14 @@ while (1){
    cout<<"4.查询员工信息"<<endl;
    cout<<"5.统计员工人数"<<endl;
    cout<<"6.遍历输出所有员工信息"<<endl;
-   cout<<"7.退出"<<endl;
+   cout<<"7.保存员工信息到当前目录下data.json文件中"<<endl;
+   cout<<"8.退出"<<endl;
    cout<<"请输入您的选择："<<endl;
    cin>>choice;
    //当输入的不是整数时，会出现死循环
-   while (cin.fail()){
-      cin.clear();
-      cin.sync();
+   while (cin.fail()){//判断输入是否为整数
+      cin.clear();//清除错误状态，以便重新输入
+      cin.sync();//清空输入流中的内容
       cout<<"输入错误，请重新输入"<<endl;
       cin>>choice;
    }
@@ -859,7 +961,8 @@ while (1){
       case 4:Search(t,e,a,ta);break;
       case 5:CountSum(t,e,a,ta);break;
       case 6:PrintAll(t,e,a,ta);break;
-      case 7:exit(0);
+      case 7:WriteToFile(t,e,a,ta);break;
+      case 8:exit(0);
       default:{cout<<"输入错误，请重新输入"<<endl;}
    }
    cout<<"-----------------------------------------------"<<endl;
