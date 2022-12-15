@@ -999,7 +999,7 @@ while (1){
    cout<<"6.遍历输出所有员工信息"<<endl;
    cout<<"7.保存员工信息到当前目录下data.json文件中"<<endl;
    cout<<"8.从当前目录下的data.json文件中读取员工信息"<<endl;
-   cout<<"8.退出"<<endl;
+   cout<<"9.退出"<<endl;
    cout<<"请输入您的选择："<<endl;
    cin>>choice;
    //当输入的不是整数时，会出现死循环
