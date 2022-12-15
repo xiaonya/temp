@@ -335,6 +335,12 @@ void InsertNew(vector<Teacher> &t, vector<Experimenter> &e, vector<Admin> &a, ve
    int i;
    cout<<"请输入员工身份对应的数字：1.教师 2.实验员 3.行政 4.教师兼行政"<<endl;
    cin>>i;
+   while (cin.fail()){//判断输入是否为整数
+      cin.clear();//清除错误状态，以便重新输入
+      cin.sync();//清空输入流中的内容
+      cout<<"输入错误，请重新输入"<<endl;
+      cin>>i;
+   }
    int age,gen;//gen性别 1男 0女
    string num, name,fac,spe,job,lab,job1,off;//fac系部 spe专业 job职称 lab实验室 job1职务 off办公地点
    switch (i)
@@ -491,6 +497,12 @@ void Search(vector<Teacher> t, vector<Experimenter> e, vector<Admin> a, vector<T
    int flag;//存放查找方式的标志
    cout<<"若按照编号查找则输入1，若按照姓名查找则输入2"<<endl;
    cin>>flag;
+   while (cin.fail()){//判断输入是否为整数
+      cin.clear();//清除错误状态，以便重新输入
+      cin.sync();//清空输入流中的内容
+      cout<<"输入错误，请重新输入"<<endl;
+      cin>>flag;
+   }
    switch (flag)
    {
       case 1:{//按照编号查找
@@ -782,6 +794,12 @@ void Modify(vector<Teacher> &t, vector<Experimenter> &e, vector<Admin> &a, vecto
    int choice;
    cout<<"请选择修改方式：1.按工号修改 2.按姓名修改"<<endl;
    cin>>choice;
+   while (cin.fail()){//判断输入是否为整数
+      cin.clear();//清除错误状态，以便重新输入
+      cin.sync();//清空输入流中的内容
+      cout<<"输入错误，请重新输入"<<endl;
+      cin>>choice;
+   }
    switch (choice){
       case 1:ModifyAccordingNum(t,e,a,ta);break;
       case 2:ModifyAccordingName(t,e,a,ta);break;
@@ -931,6 +949,7 @@ void ReadFromFile(vector<Teacher> &t, vector<Experimenter> &e, vector<Admin> &a,
    Json::Value root;
    ifstream in;
    in.open("data.json");
+   cout<<"开始读取文件"<<endl;
    if (!in.is_open()){
       cout<<"文件打开失败"<<endl;
       return;
@@ -979,6 +998,7 @@ while (1){
    cout<<"5.统计员工人数"<<endl;
    cout<<"6.遍历输出所有员工信息"<<endl;
    cout<<"7.保存员工信息到当前目录下data.json文件中"<<endl;
+   cout<<"8.从当前目录下的data.json文件中读取员工信息"<<endl;
    cout<<"8.退出"<<endl;
    cout<<"请输入您的选择："<<endl;
    cin>>choice;
@@ -997,7 +1017,8 @@ while (1){
       case 5:CountSum(t,e,a,ta);break;
       case 6:PrintAll(t,e,a,ta);break;
       case 7:WriteToFile(t,e,a,ta);break;
-      case 8:exit(0);
+      case 8:ReadFromFile(t,e,a,ta);break; 
+      case 9:exit(0);
       default:{cout<<"输入错误，请重新输入"<<endl;}
    }
    cout<<"-----------------------------------------------"<<endl;
