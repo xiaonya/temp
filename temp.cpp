@@ -850,6 +850,7 @@ void WriteToFile(vector<Teacher> t, vector<Experimenter> e, vector<Admin> a, vec
    Json::Value admin;
    Json::Value teacheradmin;
    Json::StyledWriter writer;//定义写入器
+   //将json数据编码格式设置为gbk2312
    ofstream out;
    out.open("data.json");//默认存储在当前目录下data.json文件中
    for (int i=0;i<t.size();i++){
@@ -989,8 +990,8 @@ vector<Admin> a;
 vector<TeacherAdmin> ta;
 while (1){
    system ("cls");
-   cout <<"-----------------人事管理系统-----------------"<< endl;
-   cout<<"欢迎使用人事管理系统"<<endl;
+   cout <<"-----------------高校人员管理系统-----------------"<< endl;
+   cout<<"欢迎使用高校人员管理系统"<<endl;
    cout<<"1.添加新员工"<<endl;
    cout<<"2.删除员工"<<endl;
    cout<<"3.修改员工信息"<<endl;
@@ -1000,6 +1001,7 @@ while (1){
    cout<<"7.保存员工信息到当前目录下data.json文件中"<<endl;
    cout<<"8.从当前目录下的data.json文件中读取员工信息"<<endl;
    cout<<"9.退出"<<endl;
+   cout<<"----------------------------------------------"<<endl;
    cout<<"请输入您的选择："<<endl;
    cin>>choice;
    //当输入的不是整数时，会出现死循环
@@ -1021,7 +1023,6 @@ while (1){
       case 9:exit(0);
       default:{cout<<"输入错误，请重新输入"<<endl;}
    }
-   cout<<"-----------------------------------------------"<<endl;
    system("pause");
 }
 return 0;
