@@ -385,7 +385,7 @@ void InsertNew(vector<Teacher> &t, vector<Experimenter> &e, vector<Admin> &a, ve
       break;}
 
    case 4:{
-      cout<<"请输入教师兼行政的工号、姓名、性别[1男 0女]、年龄、系部、专业、职务、办公地点、职称"<<endl;
+      cout<<"请输入教师兼行政的工号、姓名、性别[1男 0女]、年龄、系部、专业、(教师)职称、（行政）职务、办公室"<<endl;
       cin>>num>>name>>gen>>age>>fac>>spe>>job>>off>>job1;
       if (CheckNum(num, t, e, a, ta))
       {
@@ -675,7 +675,7 @@ void ModifyAccordingNum(vector<Teacher> &t, vector<Experimenter> &e, vector<Admi
       for (int i=0;i<a.size();i++){//在行政中查找
          if (num==a[i].getNum())
          {
-            cout<<"请输入修改后行政的工号、姓名、性别[1男 0女]、年龄、职务、科室"<<endl;
+            cout<<"请输入修改后行政的工号、姓名、性别[1男 0女]、年龄、职务、办公室"<<endl;
             cin>>num>>name>>gen>>age>>job>>off;
                if (CheckNum(num,t,e,a,ta)||num==PastNum)
                {  
@@ -692,7 +692,7 @@ void ModifyAccordingNum(vector<Teacher> &t, vector<Experimenter> &e, vector<Admi
       for (int i=0;i<ta.size();i++){//在教师兼行政中查找
          if (num==ta[i].getNum())
          {
-            cout<<"请输入修改后教师兼行政的工号、姓名、性别[1男 0女]、年龄、系部、专业、职称、职务、科室"<<endl;
+            cout<<"请输入修改后教师兼行政的工号、姓名、性别[1男 0女]、年龄、系部、专业、职称、职务、办公室"<<endl;
             cin>>num>>name>>gen>>age>>fac>>spe>>job>>job1>>off;
                if (CheckNum(num,t,e,a,ta)||num==PastNum)
                {  
@@ -756,7 +756,7 @@ void ModifyAccordingName(vector<Teacher> &t, vector<Experimenter> &e, vector<Adm
       for (int i=0;i<a.size();i++){//在行政中查找
          if (name==a[i].getName())
          {
-            cout<<"请输入修改后行政的工号、姓名、性别[1男 0女]、年龄、职务、科室"<<endl;
+            cout<<"请输入修改后行政的工号、姓名、性别[1男 0女]、年龄、职务、办公室"<<endl;
             cin>>num>>name>>gen>>age>>job>>off;
                if (CheckNum(num,t,e,a,ta)||num==a[i].getNum())
                {  
@@ -773,7 +773,7 @@ void ModifyAccordingName(vector<Teacher> &t, vector<Experimenter> &e, vector<Adm
       for (int i=0;i<ta.size();i++){//在教师行政中查找
          if (name==ta[i].getName())
          {
-            cout<<"请输入修改后教师兼行政的工号、姓名、性别[1男 0女]、年龄、系部、专业、职称、职务、科室"<<endl;
+            cout<<"请输入修改后教师兼行政的工号、姓名、性别[1男 0女]、年龄、系部、专业、职称、职务、办公室"<<endl;
             cin>>num>>name>>gen>>age>>fac>>spe>>job>>job1>>off;
                if (CheckNum(num,t,e,a,ta)||num==ta[i].getNum())
                {  
@@ -915,6 +915,7 @@ void WriteToFile(vector<Teacher> t, vector<Experimenter> e, vector<Admin> a, vec
          "name":"王五",
          "gen":"男",
          "age":"30",
+         "lab":"计算机实验室",
          "job":"实验员"
       }
    ],
@@ -946,6 +947,10 @@ void WriteToFile(vector<Teacher> t, vector<Experimenter> e, vector<Admin> a, vec
 }
 //将json文件中的数据读取出来,并根据不同的职位分别存入不同的vector中
 void ReadFromFile(vector<Teacher> &t, vector<Experimenter> &e, vector<Admin> &a, vector<TeacherAdmin> &ta){
+   t.clear();
+   e.clear();
+   a.clear();
+   ta.clear();
    Json::Reader reader;
    Json::Value root;
    ifstream in;
@@ -1020,7 +1025,7 @@ while (1){
       case 6:PrintAll(t,e,a,ta);break;
       case 7:WriteToFile(t,e,a,ta);break;
       case 8:ReadFromFile(t,e,a,ta);break; 
-      case 9:exit(0);
+      case 9:system ("cls");exit(0);
       default:{cout<<"输入错误，请重新输入"<<endl;}
    }
    system("pause");
